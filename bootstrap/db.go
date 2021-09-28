@@ -1,6 +1,8 @@
 package bootstrap
 
 import (
+	"gorm.io/gorm"
+	"leek-api/app/models/example"
 	"leek-api/pkg/config"
 	"leek-api/pkg/model"
 	"log"
@@ -11,6 +13,7 @@ import (
 func SetupDB() {
 	db := model.ConnectDB()
 
+	// 获取通用数据库对象 sql.DB ，然后使用其提供的功能
 	sqlDB, err := db.DB()
 	if err != nil {
 		log.Fatal(err)
@@ -22,4 +25,13 @@ func SetupDB() {
 	sqlDB.SetMaxIdleConns(config.GetInt("database.mysql.max_idle_connections"))
 	// 设置每个链接的过期时间
 	sqlDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
+
+	migration(db)
+}
+
+func migration(db *gorm.DB) {
+	// 自动迁移
+	db.AutoMigrate(
+		&example.Example{},
+	)
 }
