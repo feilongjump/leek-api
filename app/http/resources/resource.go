@@ -29,3 +29,10 @@ func ResponseForSQLError(c *gin.Context, err error) {
 		})
 	}
 }
+
+// ResponseUnauthorized 未授权的响应
+func ResponseUnauthorized(c *gin.Context) {
+	c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+		"error": "unauthorized",
+	})
+}

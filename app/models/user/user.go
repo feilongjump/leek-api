@@ -10,7 +10,7 @@ type User struct {
 
 	Username string `gorm:"type:varchar(255);not null;" json:"username" binding:"required"`
 	Email    string `gorm:"type:varchar(255);not null;" json:"email" binding:"required"`
-	Password string `gorm:"type:varchar(255);not null;" json:"-" binding:"required"`
+	Password string `gorm:"type:varchar(255);not null;" json:"password" binding:"required"`
 }
 
 // ComparePassword 对比密码匹配

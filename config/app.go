@@ -6,7 +6,7 @@ import (
 
 func init() {
 	config.Add("app", config.StrMap{
-		// 应用名称，暂时没有使用到
+		// 应用名称
 		"name": config.Env("APP_NAME", ""),
 
 		// 当前环境，用以区分多环境

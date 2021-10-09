@@ -6,6 +6,7 @@ import (
 	"leek-api/app/http/requests"
 	"leek-api/app/http/resources"
 	userModel "leek-api/app/models/user"
+	"leek-api/pkg/jwt"
 	"net/http"
 )
 
@@ -36,7 +37,18 @@ func (a *Auth) Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	// 生成令牌
+	token, tokenErr := jwt.GenerateToken(user)
+	if tokenErr != nil {
+		c.JSON(500, gin.H{
+			"error": "好像出了点什么问题，怕不是要被骂死吧。",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"access_token": token,
+	})
 }
 
 // Register 注册账号
