@@ -1,0 +1,29 @@
+package controllers
+
+import (
+    "github.com/gin-gonic/gin"
+    "net/http"
+)
+
+type {{ .StructName }} struct {
+}
+
+func ({{ .Short }} {{ .StructName }}) Index(c *gin.Context) {
+    c.JSON(http.StatusOK, gin.H{})
+}
+
+func ({{ .Short }} {{ .StructName }}) Show(c *gin.Context) {
+    c.JSON(http.StatusOK, gin.H{})
+}
+
+func ({{ .Short }} {{ .StructName }}) Store(c *gin.Context) {
+    c.JSON(http.StatusCreated, gin.H{})
+}
+
+func ({{ .Short }} {{ .StructName }}) Update(c *gin.Context) {
+    c.JSON(http.StatusOK, gin.H{})
+}
+
+func ({{ .Short }} {{ .StructName }}) Destroy(c *gin.Context) {
+    c.JSON(http.StatusNoContent, gin.H{})
+}

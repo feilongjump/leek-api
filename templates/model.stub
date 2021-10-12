@@ -1,0 +1,9 @@
+package {{ .Name }}
+
+import (
+    "leek-api/app/models"
+)
+
+type {{ .StructName }} struct {
+    models.BaseModel
+}

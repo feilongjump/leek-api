@@ -1,0 +1,10 @@
+
+func {{ .FuncName }} (r *gin.Engine) {
+	{{ .FuncName }} := new(controllers.{{ .StructName }})
+
+	r.GET("{{ .Uri }}", {{ .FuncName }}.Index)
+	r.GET("{{ .Uri }}/{id:[0-9]+}", {{ .FuncName }}.Show)
+	r.POST("{{ .Uri }}", {{ .FuncName }}.Store)
+	r.PATCH("{{ .Uri }}/{id:[0-9]+}", {{ .FuncName }}.Update)
+	r.DELETE("{{ .Uri }}/{id:[0-9]+}", {{ .FuncName }}.Destroy)
+}

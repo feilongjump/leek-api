@@ -23,5 +23,13 @@ func authorize(r *gin.Engine) {
 	{
 		user := new(controllers.User)
 		r.GET("/me", user.Me)
+
+		builder(r)
 	}
+}
+
+// builder 代码生成
+func builder(r *gin.Engine) {
+	builder := new(controllers.Builder)
+	r.POST("/builder/scaffold", builder.Scaffold)
 }

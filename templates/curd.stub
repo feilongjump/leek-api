@@ -1,0 +1,55 @@
+package {{ .Name }}
+
+import (
+	"leek-api/pkg/model"
+)
+
+func GetAll() ([]{{ .StructName }}, error) {
+
+	var {{ .Name }}s []{{ .StructName }}
+	if err := model.DB.Find(&{{ .Name }}s).Error; err != nil {
+		return {{ .Name }}s, err
+	}
+
+	return {{ .Name }}s, nil
+}
+
+func Get(id uint64) ({{ .StructName }}, error) {
+
+	var {{ .Name }} {{ .StructName }}
+
+	if err := model.DB.First(&{{ .Name }}, id).Error; err != nil {
+		return {{ .Name }}, err
+	}
+
+	return {{ .Name }}, nil
+}
+
+func ({{ .Short }} *{{ .StructName }}) Create() (err error) {
+
+	if err = model.DB.Create(&{{ .Short }}).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func ({{ .Short }} *{{ .StructName }}) Update() (rowsAffected int64, err error) {
+
+	result := model.DB.Save(&{{ .Short }})
+	if err = result.Error; err != nil {
+		return 0, err
+	}
+
+	return result.RowsAffected, nil
+}
+
+func ({{ .Short }} *{{ .StructName }}) Delete() (rowsAffected int64, err error) {
+
+	result := model.DB.Delete(&{{ .Short }})
+	if err = result.Error; err != nil {
+		return 0, err
+	}
+
+	return result.RowsAffected, nil
+}
