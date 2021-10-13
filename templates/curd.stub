@@ -44,12 +44,12 @@ func ({{ .Short }} *{{ .StructName }}) Update() (rowsAffected int64, err error) 
 	return result.RowsAffected, nil
 }
 
-func ({{ .Short }} *{{ .StructName }}) Delete() (rowsAffected int64, err error) {
+func ({{ .Short }} *{{ .StructName }}) Delete() (err error) {
 
 	result := model.DB.Delete(&{{ .Short }})
 	if err = result.Error; err != nil {
 		return 0, err
 	}
 
-	return result.RowsAffected, nil
+	return nil
 }

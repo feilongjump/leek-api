@@ -27,6 +27,7 @@ type routeStruct struct {
 }
 
 type controllerStruct struct {
+	Name       string
 	Short      string
 	StructName string
 }
@@ -89,7 +90,7 @@ func routes(params requests.BuilderForm) (string, bool) {
 func controller(s string) (string, bool) {
 	// 创建文件
 	fileName := strings.ToLower(s)
-	path := "app/http/controllers/" + fileName + ".go"
+	path := "app/http/controllers/" + fileName + "_controller.go"
 	file, err := os.Create(path)
 	defer file.Close()
 	if err != nil {
@@ -99,6 +100,7 @@ func controller(s string) (string, bool) {
 
 	// 创建模板内容
 	data := controllerStruct{
+		Name:       s,
 		Short:      strings.ToLower(string(s[0])),
 		StructName: strings.Title(s),
 	}

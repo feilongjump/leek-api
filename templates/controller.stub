@@ -2,28 +2,61 @@ package controllers
 
 import (
     "github.com/gin-gonic/gin"
+    "github.com/spf13/cast"
+    "leek-api/app/http/resources"
+    {{ .Name }}Model "leek-api/app/models/{{ .Name }}"
     "net/http"
 )
 
-type {{ .StructName }} struct {
+type {{ .StructName }}Controller struct {
 }
 
-func ({{ .Short }} {{ .StructName }}) Index(c *gin.Context) {
-    c.JSON(http.StatusOK, gin.H{})
+func ({{ .Short }} {{ .StructName }}Controller) Index(c *gin.Context) {
+
+    {{ .Name }}s, err := {{ .Name }}Model.GetAll()
+    if err != nil {
+        resources.ResponseForSQLError(c, err)
+        return
+    }
+
+    c.JSON(http.StatusOK, {{ .Name }}s)
 }
 
-func ({{ .Short }} {{ .StructName }}) Show(c *gin.Context) {
-    c.JSON(http.StatusOK, gin.H{})
+func ({{ .Short }} {{ .StructName }}Controller) Show(c *gin.Context) {
+
+    id := cast.ToUint64(c.Param("id"))
+
+    {{ .Name }}, err := {{ .Name }}Model.Get(id)
+    if err != nil {
+        resources.ResponseForSQLError(c, err)
+        return
+    }
+
+    c.JSON(http.StatusOK, {{ .Name }})
 }
 
-func ({{ .Short }} {{ .StructName }}) Store(c *gin.Context) {
+func ({{ .Short }} {{ .StructName }}Controller) Store(c *gin.Context) {
     c.JSON(http.StatusCreated, gin.H{})
 }
 
-func ({{ .Short }} {{ .StructName }}) Update(c *gin.Context) {
+func ({{ .Short }} {{ .StructName }}Controller) Update(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{})
 }
 
-func ({{ .Short }} {{ .StructName }}) Destroy(c *gin.Context) {
+func ({{ .Short }} {{ .StructName }}Controller) Destroy(c *gin.Context) {
+
+    id := cast.ToUint64(c.Param("id"))
+
+    {{ .Name }}, err := {{ .Name }}Model.Get(id)
+    if err != nil {
+        resources.ResponseForSQLError(c, err)
+        return
+    }
+
+    if err = {{ .Name }}.Delete(); err != nil {
+        resources.ResponseForSQLError(c, err)
+        return
+    }
+
     c.JSON(http.StatusNoContent, gin.H{})
 }
