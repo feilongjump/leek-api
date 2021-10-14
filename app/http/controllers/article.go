@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
+	"leek-api/app/http/requests"
 	"leek-api/app/http/resources"
 	articleModel "leek-api/app/models/article"
 	userModel "leek-api/app/models/user"
@@ -37,19 +38,20 @@ func (a ArticleController) Show(c *gin.Context) {
 
 func (a ArticleController) Store(c *gin.Context) {
 
-	article := articleModel.Article{
-		Title:  c.PostForm("title"),
-		UserID: c.MustGet("user").(userModel.User).ID,
-		Content: articleModel.Content{
-			Markdown: c.PostForm("markdown"),
-			Html:     c.PostForm("html"),
-		},
-	}
-
 	// 参数校验
-	if err := c.ShouldBind(&article); err != nil {
+	params := requests.ArticleForm{}
+	if err := c.ShouldBind(&params); err != nil {
 		resources.ResponseValidationFailed(c, err)
 		return
+	}
+
+	article := articleModel.Article{
+		Title:  params.Title,
+		UserID: c.MustGet("user").(userModel.User).ID,
+		Content: articleModel.Content{
+			Markdown: params.Markdown,
+			Html:     params.Html,
+		},
 	}
 
 	if err := article.Create(); err != nil {
@@ -71,18 +73,17 @@ func (a ArticleController) Update(c *gin.Context) {
 		return
 	}
 
-	// 获取参数
-	article.Title = c.PostForm("title")
-	article.Content.Markdown = c.PostForm("markdown")
-	article.Content.Html = c.PostForm("html")
-
 	// 参数校验
-	if err := c.ShouldBind(&article); err != nil {
+	params := requests.ArticleForm{}
+	if err := c.ShouldBind(&params); err != nil {
 		resources.ResponseValidationFailed(c, err)
 		return
 	}
 
 	// 更新数据
+	article.Title = params.Title
+	article.Content.Markdown = params.Markdown
+	article.Content.Html = params.Html
 	if _, err = article.Update(); err != nil {
 		resources.ResponseForSQLError(c, err)
 		return

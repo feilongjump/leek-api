@@ -10,5 +10,5 @@ type Article struct {
 	Title  string `gorm:"type:varchar(255);not null;" json:"title" binding:"required"`
 	UserID uint64 `gorm:"not null;index" json:"user_id"`
 
-	Content Content
+	Content Content `json:"content"`
 }
