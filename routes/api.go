@@ -25,6 +25,8 @@ func authorize(r *gin.Engine) {
 		r.GET("/me", user.Me)
 
 		builder(r)
+
+		articles(r)
 	}
 }
 
@@ -32,4 +34,15 @@ func authorize(r *gin.Engine) {
 func builder(r *gin.Engine) {
 	builder := new(controllers.Builder)
 	r.POST("/builder/scaffold", builder.Scaffold)
+}
+
+// articles 文章
+func articles(r *gin.Engine) {
+	articles := new(controllers.ArticleController)
+
+	r.GET("/articles", articles.Index)
+	r.GET("/articles/:id", articles.Show)
+	r.POST("/articles", articles.Store)
+	r.PATCH("/articles/:id", articles.Update)
+	r.DELETE("/articles/:id", articles.Destroy)
 }
