@@ -8,17 +8,17 @@ func init() {
 		"mysql": map[string]interface{}{
 
 			// 数据库连接信息
-			"host":     config.Env("DB_HOST", "127.0.0.1"),
-			"port":     config.Env("DB_PORT", "3306"),
-			"database": config.Env("DB_DATABASE", "example"),
-			"username": config.Env("DB_USERNAME", "super"),
-			"password": config.Env("DB_PASSWORD", "secret"),
+			"host":     config.Env("database.host", "127.0.0.1"),
+			"port":     config.Env("database.port", "3306"),
+			"database": config.Env("database.database", ""),
+			"username": config.Env("database.username", ""),
+			"password": config.Env("database.password", ""),
 			"charset":  "utf8mb4",
 
 			// 连接池配置
-			"max_idle_connections": config.Env("DB_MAX_IDLE_CONNECTIONS", 100),
-			"max_open_connections": config.Env("DB_MAX_OPEN_CONNECTIONS", 25),
-			"max_life_seconds":     config.Env("DB_MAX_LIFE_SECONDS", 5*60),
+			"max_idle_connections": config.Env("database.max_idle_connections", 100),
+			"max_open_connections": config.Env("database.max_open_connections", 25),
+			"max_life_seconds":     config.Env("database.max_life_seconds", 5*60),
 		},
 	})
 }

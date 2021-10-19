@@ -1,0 +1,20 @@
+title = "App example toml"
+
+[app]
+  name = "App"
+  env = "production"
+  debug = false
+  port = 3000
+  url = "http://localhost:3000"
+
+[database]
+  connection = "mysql"
+  server = "localhost"
+  port = 3306
+  database = "example"
+  username = "username"
+  password = "password"
+
+[jwt]
+  secret = ""
+  ttl = 3600

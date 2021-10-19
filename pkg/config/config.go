@@ -19,22 +19,22 @@ func init() {
 	Viper = viper.New()
 
 	// 设置文件名称
-	Viper.SetConfigName(".env")
+	Viper.SetConfigName(".app_env")
 
 	// 配置类型，支持 "json", "toml", "yaml", "yml", "properties", "props", "prop", "env", "dotenv"
-	Viper.SetConfigType("env")
+	Viper.SetConfigType("toml")
 
 	// 环境变量配置文件查找的路径，相对于 main.go
 	Viper.AddConfigPath(".")
 
-	// 开始读根目录下的 .env 文件，读不到会报错
+	// 开始读根目录下的 .app_env 文件，读不到会报错
 	err := Viper.ReadInConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// 设置环境变量前缀，用以区分 Go 的系统环境变量
-	Viper.SetEnvPrefix("appenv")
+	Viper.SetEnvPrefix("leek")
 	// Viper.Get() 时，优先读取环境变量
 	Viper.AutomaticEnv()
 }

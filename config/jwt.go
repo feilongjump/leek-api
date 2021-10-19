@@ -7,9 +7,9 @@ import (
 func init() {
 	config.Add("jwt", config.StrMap{
 		// 密钥
-		"secret": config.Env("JWT_SECRET"),
+		"secret": config.Env("jwt.secret", ""),
 
 		// 有效时间，单位：秒
-		"ttl": config.Env("JWT_TTL", 3600),
+		"ttl": config.Env("jwt.ttl", 3600),
 	})
 }
