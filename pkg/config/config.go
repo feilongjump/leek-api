@@ -19,7 +19,7 @@ func init() {
 	Viper = viper.New()
 
 	// 设置文件名称
-	Viper.SetConfigName(".app_env")
+	Viper.SetConfigName("_config")
 
 	// 配置类型，支持 "json", "toml", "yaml", "yml", "properties", "props", "prop", "env", "dotenv"
 	Viper.SetConfigType("toml")

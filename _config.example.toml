@@ -9,7 +9,7 @@ title = "App example toml"
 
 [database]
   connection = "mysql"
-  server = "localhost"
+  host = "localhost"
   port = 3306
   database = "example"
   username = "username"
