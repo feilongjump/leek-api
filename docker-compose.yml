@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  ### Leek-API #############################################
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./deployments/app/Dockerfile
+      args:
+        - TZ=${TIMEZONE}
+    deploy:
+      # 开启容器重启策略，由于 mysql 容器启动时间较长，当 app 容器启动失败后，重新启动
+      restart_policy:         # 定义容器重启策略, 用于代替 restart 参数
+        condition: on-failure # 只有当容器内部应用程序出现问题才会重启
+        delay: 5s             # 尝试重启的间隔时间(默认为 0s)
+        max_attempts: 3       # 尝试重启次数(默认一直尝试重启)
+        window: 30s           # 检查重启是否成功之前的等待时间(即如果容器启动了, 隔多少秒之后去检测容器是否正常, 默认 0s)
+    ports:
+      - "${APP_PORT}:8080"
+    volumes:
+      - ./${APP_CONFIG_FILE}:/dist/${APP_CONFIG_FILE} # 直接共享文件，避免更改环境变量时，需要重新打包
+    depends_on:
+      - mysql
+
+  ### MYSQL ################################################
+  mysql:
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: ./deployments/mysql/Dockerfile
+      args:
+        - TZ=${TIMEZONE}
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ${MYSQL_DATA_PATH}:/var/lib/mysql
