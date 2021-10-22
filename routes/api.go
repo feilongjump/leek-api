@@ -27,6 +27,8 @@ func authorize(r *gin.Engine) {
 		builder(r)
 
 		articles(r)
+
+		products(r)
 	}
 }
 
@@ -45,4 +47,15 @@ func articles(r *gin.Engine) {
 	r.POST("/articles", articles.Store)
 	r.PATCH("/articles/:id", articles.Update)
 	r.DELETE("/articles/:id", articles.Destroy)
+}
+
+// products 商品
+func products(r *gin.Engine) {
+	products := new(controllers.ProductController)
+
+	r.GET("/products", products.Index)
+	r.GET("/products/:id", products.Show)
+	r.POST("/products", products.Store)
+	r.PATCH("/products/:id", products.Update)
+	r.DELETE("/products/:id", products.Destroy)
 }

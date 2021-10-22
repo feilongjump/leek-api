@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"gorm.io/gorm"
 	"leek-api/app/models/article"
+	"leek-api/app/models/product"
 	"leek-api/app/models/user"
 	"leek-api/pkg/config"
 	"leek-api/pkg/model"
@@ -36,5 +37,6 @@ func migration(db *gorm.DB) {
 		&user.User{},
 		&article.Article{},
 		&article.Content{},
+		&product.Product{},
 	)
 }
