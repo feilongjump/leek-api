@@ -48,7 +48,7 @@ func ({{ .Short }} *{{ .StructName }}) Delete() (err error) {
 
 	result := model.DB.Delete(&{{ .Short }})
 	if err = result.Error; err != nil {
-		return 0, err
+		return err
 	}
 
 	return nil
