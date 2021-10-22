@@ -90,7 +90,7 @@ func routes(params requests.BuilderForm) (string, bool) {
 func controller(s string) (string, bool) {
 	// 创建文件
 	fileName := strings.ToLower(s)
-	path := "app/http/controllers/" + fileName + "_controller.go"
+	path := "app/http/controllers/" + fileName + ".go"
 	file, err := os.Create(path)
 	defer file.Close()
 	if err != nil {
