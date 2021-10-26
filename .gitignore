@@ -1,5 +1,4 @@
 .idea
-tmp
 .env
 _config.toml
 deployments/mysql/data
