@@ -28,6 +28,7 @@ func authorize(r *gin.Engine) {
 
 		articles(r)
 
+		productSkus(r)
 		products(r)
 	}
 }
@@ -54,8 +55,17 @@ func products(r *gin.Engine) {
 	products := new(controllers.ProductController)
 
 	r.GET("/products", products.Index)
-	r.GET("/products/:id", products.Show)
+	r.GET("/products/:product", products.Show)
 	r.POST("/products", products.Store)
-	r.PATCH("/products/:id", products.Update)
-	r.DELETE("/products/:id", products.Destroy)
+	r.PATCH("/products/:product", products.Update)
+	r.DELETE("/products/:product", products.Destroy)
+}
+
+// productSkus 商品 SKU
+func productSkus(r *gin.Engine) {
+	productSkus := new(controllers.ProductSkuController)
+
+	r.POST("/products/:product/skus", productSkus.Store)
+	r.PATCH("/products/:product/skus/:sku", productSkus.Update)
+	r.DELETE("/products/:product/skus/:sku", productSkus.Destroy)
 }

@@ -1,6 +1,7 @@
 package product
 
 import (
+	"gorm.io/gorm/clause"
 	"leek-api/pkg/model"
 )
 
@@ -18,7 +19,7 @@ func Get(id uint64) (Product, error) {
 
 	var product Product
 
-	if err := model.DB.First(&product, id).Error; err != nil {
+	if err := model.DB.Preload(clause.Associations).First(&product, id).Error; err != nil {
 		return product, err
 	}
 
@@ -46,7 +47,7 @@ func (p *Product) Update() (rowsAffected int64, err error) {
 
 func (p *Product) Delete() (err error) {
 
-	result := model.DB.Delete(&p)
+	result := model.DB.Select(clause.Associations).Delete(&p)
 	if err = result.Error; err != nil {
 		return err
 	}

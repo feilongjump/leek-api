@@ -38,5 +38,6 @@ func migration(db *gorm.DB) {
 		&article.Article{},
 		&article.Content{},
 		&product.Product{},
+		&product.Sku{},
 	)
 }
