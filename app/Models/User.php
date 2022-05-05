@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property mixed $is_admin
+ * @property mixed $activated_at
  */
 class User extends Authenticatable
 {
@@ -21,9 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name', 'email', 'password', 'activated_at'
     ];
 
     /**
@@ -42,6 +41,15 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'activated_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'is_activated',
+    ];
+
+    public function getIsActivatedAttribute(): bool
+    {
+        return (bool) $this->activated_at;
+    }
 }
