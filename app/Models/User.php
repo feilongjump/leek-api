@@ -7,9 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
-use Laravel\Sanctum\NewAccessToken;
 
 /**
  * @property mixed $is_admin
@@ -54,25 +52,5 @@ class User extends Authenticatable
     public function getIsActivatedAttribute(): bool
     {
         return (bool) $this->activated_at;
-    }
-
-    /**
-     * Create a new personal access token for the user.
-     *
-     * @param string $name
-     * @param array $abilities
-     * @param null $expiredAt
-     * @return NewAccessToken
-     */
-    public function createToken(string $name, array $abilities = ['*'], $expiredAt = null): NewAccessToken
-    {
-        $token = $this->tokens()->create([
-            'name' => $name,
-            'token' => hash('sha256', $plainTextToken = Str::random(40)),
-            'abilities' => $abilities,
-            'expired_at' => now()->addMinutes($expiredAt),
-        ]);
-
-        return new NewAccessToken($token, $token->getKey().'|'.$plainTextToken);
     }
 }
