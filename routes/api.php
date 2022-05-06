@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
+
+Route::get('me', [\App\Http\Controllers\UserController::class, 'me']);

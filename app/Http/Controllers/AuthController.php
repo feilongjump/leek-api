@@ -36,14 +36,17 @@ class AuthController extends Controller
      *
      * @param User|Authenticatable $user
      * @param array $abilities
+     * @param integer|null $expiredAt
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken(User|Authenticatable $user, array $abilities = ['*']): \Illuminate\Http\JsonResponse
+    protected function respondWithToken(User|Authenticatable $user, array $abilities = ['*'], int|null $expiredAt = null): \Illuminate\Http\JsonResponse
     {
+        $expiredAt = $expiredAt ?: config('sanctum.expiration');
+
         return response()->json([
-            'access_token' => $user->createToken(config('app.name'), $abilities)->plainTextToken,
+            'access_token' => $user->createToken(config('app.name'), $abilities, $expiredAt)->plainTextToken,
             'token_type' => 'Bearer',
-            'expires_in' => now()->addSeconds(config('sanctum.expiration') ?? 604800)->timestamp
+            'expires_in' => now()->addMinutes($expiredAt)->timestamp
         ]);
     }
 }

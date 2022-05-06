@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\PersonalAccessToken;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Sanctum\Sanctum;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // 注册使用自定义模型
+        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
+
+        Sanctum::authenticateAccessTokensUsing(
+            static function (PersonalAccessToken $accessToken, bool $is_valid) {
+                // 自定义的验证逻辑
+                return $accessToken->expired_at ? $is_valid && !$accessToken->expired_at->isPast() : $is_valid;
+            }
+        );
     }
 }
