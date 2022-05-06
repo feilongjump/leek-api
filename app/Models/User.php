@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
+ * @property mixed $id
  * @property mixed $is_admin
  * @property mixed $activated_at
  */
