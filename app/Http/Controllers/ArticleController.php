@@ -14,9 +14,11 @@ class ArticleController extends Controller
         $this->middleware(['auth:sanctum']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::whereUserId(auth()->user()->id)->latest()->get();
+        $articles = Article::whereUserId(auth()->user()->id)
+            ->latest()
+            ->paginate($request->get('per_page', 1));
 
         return ArticleResource::collection($articles);
     }
