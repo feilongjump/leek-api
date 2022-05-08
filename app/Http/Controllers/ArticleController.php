@@ -32,6 +32,8 @@ class ArticleController extends Controller
     {
         $this->authorize('view', $article);
 
+        $article->loadMissing('content');
+
         return new ArticleResource($article);
     }
 

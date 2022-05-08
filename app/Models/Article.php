@@ -22,4 +22,9 @@ class Article extends Model
     protected $fillable = [
         'user_id', 'title',
     ];
+
+    public function content()
+    {
+        return $this->morphOne(Content::class, 'contentable');
+    }
 }
