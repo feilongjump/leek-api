@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property mixed $user_id
- * @property mixed $is_admin
- * @property mixed $activated_at
+ * @property int $id
+ * @property int $user_id
+ * @property string $activated_at
  */
 class Article extends Model
 {
