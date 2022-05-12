@@ -12,7 +12,7 @@ class AuthRequest extends FormRequest
     public function rules(): array
     {
         return match ($this->path()) {
-            'login' => [
+            'api/login' => [
                 'username' => 'required|string',
                 'password' => 'required|min:6',
             ],
