@@ -18,7 +18,7 @@ class ArticleController extends Controller
     {
         $articles = Article::whereUserId(auth()->user()->id)
             ->latest()
-            ->paginate($request->get('per_page', 1));
+            ->paginate($request->get('per_page', 10));
 
         return ArticleResource::collection($articles);
     }
