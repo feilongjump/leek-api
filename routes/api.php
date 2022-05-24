@@ -19,4 +19,5 @@ Route::get('me', [\App\Http\Controllers\UserController::class, 'me']);
 
 Route::resources([
     'articles' => \App\Http\Controllers\ArticleController::class,
+    'projects' => \App\Http\Controllers\ProjectController::class,
 ]);
