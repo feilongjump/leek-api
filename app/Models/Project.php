@@ -15,11 +15,16 @@ class Project extends Model
      * @var string[]
      */
     protected $fillable = [
-        'user_id', 'title',
+        'user_id', 'name',
     ];
 
     public function content()
     {
         return $this->morphOne(Content::class, 'contentable');
+    }
+
+    public function columns()
+    {
+        return $this->hasMany(ProjectColumn::class);
     }
 }
