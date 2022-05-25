@@ -21,3 +21,8 @@ Route::resources([
     'articles' => \App\Http\Controllers\ArticleController::class,
     'projects' => \App\Http\Controllers\ProjectController::class,
 ]);
+Route::resource(
+    'projects/{project}/columns',
+    \App\Http\Controllers\ProjectColumnController::class,
+    ['only' => ['store', 'update', 'destroy', 'test']]
+);

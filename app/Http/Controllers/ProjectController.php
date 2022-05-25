@@ -34,7 +34,7 @@ class ProjectController extends Controller
     {
         $this->authorize('view', $project);
 
-        $project->loadMissing('content');
+        $project->loadMissing(['content', 'columns']);
 
         return new ProjectResource($project);
     }

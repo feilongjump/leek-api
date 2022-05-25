@@ -27,6 +27,11 @@ class ProjectObserver
         $this->saveContent($project);
     }
 
+    public function deleted(Project $project)
+    {
+        $project->columns()->delete();
+    }
+
     private function saveContent(Project $project)
     {
         $type = request('type', 'markdown');
