@@ -17,4 +17,14 @@ class ProjectColumnCard extends Model
     protected $fillable = [
         'project_column_id', 'name',
     ];
+
+    public function content()
+    {
+        return $this->morphOne(Content::class, 'contentable');
+    }
+
+    public function column()
+    {
+        return $this->belongsTo(ProjectColumn::class, 'project_column_id');
+    }
 }

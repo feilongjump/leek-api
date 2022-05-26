@@ -2,20 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 class ProjectColumnCardRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,8 +11,16 @@ class ProjectColumnCardRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return match ($this->getMethod()) {
+            'POST', 'PATCH' => [
+                'name' => 'required|min:2',
+                'type' => 'in:markdown,body',
+                'content.body' => 'required_if:type,body',
+                'content.markdown' => 'required_if:type,markdown',
+            ],
+            default => [
+                //
+            ],
+        };
     }
 }

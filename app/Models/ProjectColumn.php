@@ -17,4 +17,14 @@ class ProjectColumn extends Model
     protected $fillable = [
         'project_id', 'name',
     ];
+
+    public function cards()
+    {
+        return $this->hasMany(ProjectColumnCard::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }
