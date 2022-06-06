@@ -24,12 +24,14 @@ class ProjectColumnCardObserver
 
     private function saveContent(ProjectColumnCard $card)
     {
-        $type = request('type', 'markdown');
+        if (request()->whenFilled('type', function ($input) use ($card) {
 
-        $data = Arr::only(request('content', []), $type);
+            $data = Arr::only(request('content', []), $input);
 
-        $card->content()->updateOrCreate(['contentable_id' => $card->id], $data);
+            $card->content()->updateOrCreate(['contentable_id' => $card->id], $data);
 
-        $card->loadMissing('content');
+            $card->loadMissing('content');
+
+        }));
     }
 }
