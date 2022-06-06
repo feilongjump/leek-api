@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use Illuminate\Http\Request;
 use App\Models\ProjectColumn;
 use App\Http\Requests\ProjectRequest;
 use App\Http\Resources\ProjectColumnResource;
@@ -12,6 +13,15 @@ class ProjectColumnController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum');
+    }
+
+    public function index(Project $project, Request $request)
+    {
+        $projects = ProjectColumn::whereProjectId($project->id)
+            ->latest()
+            ->get();
+
+        return ProjectColumnResource::collection($projects);
     }
 
     public function store(Project $project, ProjectRequest $request)

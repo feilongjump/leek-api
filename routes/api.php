@@ -25,5 +25,5 @@ Route::resources([
 Route::resource(
     'projects/{project}/columns',
     \App\Http\Controllers\ProjectColumnController::class,
-    ['only' => ['store', 'update', 'destroy']]
+    ['only' => ['index', 'store', 'update', 'destroy']]
 );
