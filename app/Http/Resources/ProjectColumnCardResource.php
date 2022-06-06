@@ -2,9 +2,7 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-
-class ProjectColumnCardResource extends JsonResource
+class ProjectColumnCardResource extends Resource
 {
     /**
      * Transform the resource into an array.
