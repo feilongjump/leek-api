@@ -68,10 +68,9 @@ class NovelController extends Controller
         });
 
         // Book chapters
-        [$chapters] = $crawler->filter('#at')->nextAll()->each(function (Crawler $node) {
-            return $node->filter('tr > td > a')->each(function (Crawler $aNode, $i) {
-                $source = config('novel.source');
-
+        $source = config('novel.source');
+        [$chapters] = $crawler->filter('#at')->nextAll()->each(function (Crawler $node) use ($source) {
+            return $node->filter('tr > td > a')->each(function (Crawler $aNode, $i) use ($source) {
                 return [
                     'title' => $aNode->text(),
                     'link' => base64_encode($source . $aNode->attr('href'))
