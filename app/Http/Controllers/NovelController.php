@@ -43,9 +43,9 @@ class NovelController extends Controller
         return $data;
     }
 
-    public function show($novelLink, Request $request)
+    public function show($novel, Request $request)
     {
-        $url = base64_decode($novelLink);
+        $url = base64_decode($novel);
 
         $response = Http::get($url);
 
