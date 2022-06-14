@@ -27,3 +27,6 @@ Route::resource(
     \App\Http\Controllers\ProjectColumnController::class,
     ['only' => ['index', 'store', 'update', 'destroy']]
 );
+
+Route::get('novels/search', [\App\Http\Controllers\NovelController::class, 'search']);
+Route::get('novels/{novel}', [\App\Http\Controllers\NovelController::class, 'show']);
