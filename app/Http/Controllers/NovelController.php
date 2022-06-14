@@ -80,4 +80,37 @@ class NovelController extends Controller
 
         return compact('info', 'chapters');
     }
+
+    public function chapter($novel, $chapter, Request $request)
+    {
+        $url = base64_decode($chapter);
+
+        $response = Http::get($url);
+
+        $crawler = new Crawler($response->body());
+
+        $title = $crawler->filter('h1')->text();
+
+        $source = config('novel.source');
+        [$previous, $show, $next] = $crawler->filter('#footlink > a')->each(function (Crawler $node, $i) use ($source) {
+            $url = $node->attr('href');
+            return [
+                'title' => $node->text(),
+                'link' => base64_encode($source . $url),
+                'is_novel_link' => !strpos($url, '.html')
+            ];
+        });
+        $links = compact('previous', 'show', 'next');
+
+        $content = $crawler->filter('#contents > p')->each(function (Crawler $node) {
+            if ($node->filter('a')->count() === 0) {
+                return $node->outerHtml();
+            } else {
+                return null;
+            }
+        });
+        $content = implode('', $content);
+
+        return compact('title', 'links', 'content');
+    }
 }

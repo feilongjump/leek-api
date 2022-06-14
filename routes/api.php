@@ -29,4 +29,5 @@ Route::resource(
 );
 
 Route::get('novels/search', [\App\Http\Controllers\NovelController::class, 'search']);
+Route::get('novels/{novel}/chapters/{chapter}', [\App\Http\Controllers\NovelController::class, 'chapter']);
 Route::get('novels/{novel}', [\App\Http\Controllers\NovelController::class, 'show']);
