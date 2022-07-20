@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('forget-password', [\App\Http\Controllers\AuthController::class, 'forgetPassword']);
+Route::post('reset-password', [\App\Http\Controllers\AuthController::class, 'reset']);
 
 Route::get('me', [\App\Http\Controllers\UserController::class, 'me']);
 

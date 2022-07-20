@@ -16,6 +16,9 @@ class AuthRequest extends FormRequest
                 'username' => 'required|string',
                 'password' => 'required|min:6',
             ],
+            'api/forget-password' => [
+                'email' => 'required|email',
+            ],
             default => [
                 //
             ],

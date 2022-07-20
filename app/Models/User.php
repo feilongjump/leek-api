@@ -7,10 +7,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\HasApiTokens;
+use App\Mail\ResetPassword;
 
 /**
  * @property int $id
+ * @property string $email
+ * @property string $password
  * @property boolean $is_admin
  * @property \Carbon\Carbon $activated_at
  */
@@ -53,5 +57,10 @@ class User extends Authenticatable
     public function getIsActivatedAttribute(): bool
     {
         return (bool) $this->activated_at;
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        return Mail::to($this->email)->queue(new ResetPassword($this->email, $token));
     }
 }
