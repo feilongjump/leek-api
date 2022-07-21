@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -50,7 +51,7 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
 
-        $this->broker()->reset(
+        $status = $this->broker()->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
 
@@ -64,7 +65,9 @@ class AuthController extends Controller
             }
         );
 
-        return response()->json();
+        return $status === Password::PASSWORD_RESET ?
+            response()->json($this->resetPasswordMessage($status)) :
+            response()->json($this->resetPasswordMessage($status))->setStatusCode(Response::HTTP_UNAUTHORIZED);
     }
 
     public function resetPassword(Request $request)
@@ -82,7 +85,7 @@ class AuthController extends Controller
             'password' => bcrypt($request->get('password')),
         ]);
 
-        return response()->json();
+        return response()->json($this->resetPasswordMessage($this->broker()::PASSWORD_RESET));
     }
 
     public function forgetPassword(AuthRequest $request)
@@ -91,7 +94,7 @@ class AuthController extends Controller
             $request->only('email')
         );
 
-        return response()->json();
+        return response()->json($this->resetPasswordMessage($this->broker()::RESET_LINK_SENT));
     }
 
     /**
@@ -115,5 +118,12 @@ class AuthController extends Controller
     protected function broker()
     {
         return Password::broker();
+    }
+
+    protected function resetPasswordMessage(string $status): array
+    {
+        $message = __($status);
+
+        return compact('message');
     }
 }
